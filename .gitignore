@@ -1,0 +1,16 @@
+# Ignore compiled Java files
+*.class
+
+# Ignore Eclipse/IntelliJ project files
+*.iml
+.idea/
+*.project
+*.classpath
+*.settings/
+
+# Ignore LWJGL native binaries
+natives/
+
+# Ignore logs and temporary files
+*.log
+*.tmp
