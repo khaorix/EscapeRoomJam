@@ -45,4 +45,8 @@ public class HUD {
 		}
 		GL11.glColor3f(1f, 1f, 1f); // Reset color to normal
 	}
+	
+	public Inventory getInventory() {
+		return inventory;
+	}
 }

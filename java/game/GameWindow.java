@@ -145,7 +145,12 @@ public class GameWindow {
 
 	        if (checkX >= 0 && checkX < currentRoom.getWidth() && checkY >= 0 && checkY < currentRoom.getHeight()) {
 	            char tile = currentRoom.getTile(checkX, checkY);
-
+	            
+	            Item pickedUp = currentRoom.getItemFromCoords(checkX, checkY);
+	            if (pickedUp!= null) {
+	            	pickup(pickedUp);
+	            	return;
+	            }
 	            if (tile == TileConstants.TABLE) {
 	                showText("It's an old wooden table. Looks fragile.");
 	                return;
@@ -161,6 +166,16 @@ public class GameWindow {
 	    showText("Nothing interesting here.");
 	}
 	
+	private void pickup(Item pickedUp) {
+		if (hud.getInventory().isFull()){
+			showText("I can't pick it up, my pockets are full...");
+		} else {
+			hud.getInventory().addItem(pickedUp);
+			showText(pickedUp.getPickupMessage());
+		}
+		
+	}
+
 	// TEXT
 	private void showText(String message) {
 		displayedText = message;

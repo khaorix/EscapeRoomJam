@@ -4,6 +4,9 @@ import org.lwjgl.opengl.GL11;
 
 public class Item {
 	private String name;
+	private String pickupMessage;
+	private String description;
+	private String useMessage;
 	private Texture texture;
 	private static int TILESIZE = 32;
 	
@@ -34,4 +37,28 @@ public class Item {
         GL11.glVertex2f(screenX, screenY + TILESIZE);
         GL11.glEnd();
     }
+
+	public String getPickupMessage() {
+		return pickupMessage;
+	}
+
+	public void setPickupMessage(String pickupMessage) {
+		this.pickupMessage = pickupMessage;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String desc) {
+		this.description = desc;
+	}
+
+	public String getUseMessage() {
+		return useMessage;
+	}
+
+	public void setUseMessage(String useMessage) {
+		this.useMessage = useMessage;
+	}
 }
