@@ -1,5 +1,6 @@
 package game;
 
+import java.awt.Point;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,6 +36,8 @@ public class GameWindow {
 	private TextRenderer textRenderer;
 	private String displayedText = "";
 	private boolean textVisible = false;
+	
+	private boolean interactPressed = false;
 
 	// TECHNICAL
 	public void run() {
@@ -77,6 +80,8 @@ public class GameWindow {
 		textRenderer = new TextRenderer("src/main/resources/font/fontgrid white.png", 512, 160);
 		
 		currentRoom = new Room(RoomsConstants.TEST_ROOM);
+		final Item ironKey = new Item("Iron Key", "src/main/resources/textures/ironKey.png", "I picked up an iron key.", "A small key made of iron.", "It opened the iron lock on the door...");
+		currentRoom.addItem(5, 1, ironKey);
 		inventory = new Inventory();
 		hud = new HUD(inventory);
 	}
@@ -108,10 +113,16 @@ public class GameWindow {
 		checkKey(GLFW.GLFW_KEY_D, 1, 0);
 		checkKey(GLFW.GLFW_KEY_RIGHT, 1, 0);
 
-		if (GLFW.glfwGetKey(window, GLFW.GLFW_KEY_E) == GLFW.GLFW_PRESS
-				|| GLFW.glfwGetKey(window, GLFW.GLFW_KEY_F) == GLFW.GLFW_PRESS) {
-			interact();
-		}
+		boolean keyDown = GLFW.glfwGetKey(window, GLFW.GLFW_KEY_E) == GLFW.GLFW_PRESS|| GLFW.glfwGetKey(window, GLFW.GLFW_KEY_F) == GLFW.GLFW_PRESS;
+
+	    if (keyDown && !interactPressed) { 
+	        interactPressed = true; // Prevent repeated calls
+	        interact(); // Call the function once
+	    }
+
+	    if (!keyDown) {
+	        interactPressed = false; // Reset when key is released
+	    }
 
 		if (GLFW.glfwGetKey(window, GLFW.GLFW_KEY_SPACE) == GLFW.GLFW_PRESS) {
 			hideText();
@@ -145,10 +156,11 @@ public class GameWindow {
 
 	        if (checkX >= 0 && checkX < currentRoom.getWidth() && checkY >= 0 && checkY < currentRoom.getHeight()) {
 	            char tile = currentRoom.getTile(checkX, checkY);
-	            
+	            System.out.println("Tile checked : " + checkX + "/" + checkY);
 	            Item pickedUp = currentRoom.getItemFromCoords(checkX, checkY);
 	            if (pickedUp!= null) {
-	            	pickup(pickedUp);
+	            	System.out.println("Item detected");
+	            	pickup(pickedUp, checkX, checkY);
 	            	return;
 	            }
 	            if (tile == TileConstants.TABLE) {
@@ -166,12 +178,16 @@ public class GameWindow {
 	    showText("Nothing interesting here.");
 	}
 	
-	private void pickup(Item pickedUp) {
+	private void pickup(Item pickedUp, int x, int y) {
+		System.out.println("Attempting to pick up " + pickedUp.getName());
 		if (hud.getInventory().isFull()){
 			showText("I can't pick it up, my pockets are full...");
 		} else {
+			System.out.println("Item picked up!");
 			hud.getInventory().addItem(pickedUp);
 			showText(pickedUp.getPickupMessage());
+			Point point = new Point(x,y);
+			currentRoom.removeItem(point);
 		}
 		
 	}

@@ -10,8 +10,11 @@ public class Item {
 	private Texture texture;
 	private static int TILESIZE = 32;
 	
-	public Item(String name, String texturePath) {
+	public Item(String name, String texturePath, String pickupMessage, String description, String useMessage) {
 		this.name = name;
+		this.pickupMessage = pickupMessage;
+		this.description = description;
+		this.useMessage = useMessage;
 		this.texture = new Texture(texturePath);
 	}
 	
@@ -24,19 +27,24 @@ public class Item {
     }
 
     public void renderItem(float screenX, float screenY) {
-        texture.bind();
+    	 GL11.glEnable(GL11.GL_TEXTURE_2D); // Ensure textures are enabled
+    	    texture.bind(); // Bind the item's texture
 
-        GL11.glBegin(GL11.GL_QUADS);
-        GL11.glTexCoord2f(0, 0);
-        GL11.glVertex2f(screenX, screenY);
-        GL11.glTexCoord2f(1, 0);
-        GL11.glVertex2f(screenX + TILESIZE, screenY);
-        GL11.glTexCoord2f(1, 1);
-        GL11.glVertex2f(screenX + TILESIZE, screenY + TILESIZE);
-        GL11.glTexCoord2f(0, 1);
-        GL11.glVertex2f(screenX, screenY + TILESIZE);
-        GL11.glEnd();
-    }
+    	    GL11.glColor3f(1f, 1f, 1f); // Reset color to full brightness (important!)
+
+    	    GL11.glBegin(GL11.GL_QUADS);
+    	    GL11.glTexCoord2f(0, 0);
+    	    GL11.glVertex2f(screenX, screenY);
+    	    GL11.glTexCoord2f(1, 0);
+    	    GL11.glVertex2f(screenX + TILESIZE, screenY);
+    	    GL11.glTexCoord2f(1, 1);
+    	    GL11.glVertex2f(screenX + TILESIZE, screenY + TILESIZE);
+    	    GL11.glTexCoord2f(0, 1);
+    	    GL11.glVertex2f(screenX, screenY + TILESIZE);
+    	    GL11.glEnd();
+
+    	    GL11.glDisable(GL11.GL_TEXTURE_2D); // Disable textures after rendering (optional)
+    	}
 
 	public String getPickupMessage() {
 		return pickupMessage;
