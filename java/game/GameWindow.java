@@ -38,6 +38,8 @@ public class GameWindow {
 	private boolean textVisible = false;
 	
 	private boolean interactPressed = false;
+	
+	private Item ironKey;
 
 	// TECHNICAL
 	public void run() {
@@ -74,13 +76,14 @@ public class GameWindow {
 		tileTextures.put(TileConstants.BED, TextureLoader.loadTexture("src/main/resources/textures/bed.png"));
 		tileTextures.put(TileConstants.CHAIR, TextureLoader.loadTexture("src/main/resources/textures/chair.png"));
 		tileTextures.put(TileConstants.WARDROBE, TextureLoader.loadTexture("src/main/resources/textures/wardrobe.png"));
-		tileTextures.put(TileConstants.DOOR, TextureLoader.loadTexture("src/main/resources/textures/door.png"));
+		tileTextures.put(TileConstants.IRON_DOOR, TextureLoader.loadTexture("src/main/resources/textures/door.png"));
 		tileTextures.put(TileConstants.PLAYER, TextureLoader.loadTexture("src/main/resources/textures/player.png"));
+		tileTextures.put(TileConstants.OPEN_IRON_DOOR, TextureLoader.loadTexture("src/main/resources/textures/openDoor.png"));
 
 		textRenderer = new TextRenderer("src/main/resources/font/fontgrid white.png", 512, 160);
 		
 		currentRoom = new Room(RoomsConstants.TEST_ROOM);
-		final Item ironKey = new Item("Iron Key", "src/main/resources/textures/ironKey.png", "I picked up an iron key.", "A small key made of iron.", "It opened the iron lock on the door...");
+		ironKey = ItemConstants.IRON_KEY;
 		currentRoom.addItem(5, 1, ironKey);
 		inventory = new Inventory();
 		hud = new HUD(inventory);
@@ -139,11 +142,23 @@ public class GameWindow {
 
 			// Check if the tile is walkable (e.g., not a wall)
 			char tile = currentRoom.getTile(newX, newY);
-			if (tile == TileConstants.FLOOR || tile == TileConstants.DOOR) {
+			if (tile == TileConstants.FLOOR) {
 				playerX = newX;
 				playerY = newY;
 			}
+			
+			//Handle map transitions
+			if (tile == TileConstants.OPEN_IRON_DOOR) {
+				loadIronRoom();
+				return;
+			}
 		}
+	}
+
+	private void loadIronRoom() {
+		currentRoom = new Room(RoomsConstants.IRON_ROOM);
+		playerX = 1;
+		playerY = 3;
 	}
 
 	//INTERACTION
@@ -156,40 +171,58 @@ public class GameWindow {
 
 	        if (checkX >= 0 && checkX < currentRoom.getWidth() && checkY >= 0 && checkY < currentRoom.getHeight()) {
 	            char tile = currentRoom.getTile(checkX, checkY);
-	            System.out.println("Tile checked : " + checkX + "/" + checkY);
 	            Item pickedUp = currentRoom.getItemFromCoords(checkX, checkY);
 	            if (pickedUp!= null) {
-	            	System.out.println("Item detected");
 	            	pickup(pickedUp, checkX, checkY);
 	            	return;
 	            }
-	            if (tile == TileConstants.TABLE) {
-	                showText("It's an old wooden table. Looks fragile.");
-	                return;
-	            } else if (tile == TileConstants.BED) {
-	                showText("This isn't my bed, yet I woke up in it...");
-	                return;
-	            } else if (tile == TileConstants.WARDROBE) {
-	                showText("The wardrobe creaks as I touch it.");
-	                return;
+	            switch (tile) {
+	            case TileConstants.TABLE:
+	            	showText("It's an old wooden table. Looks fragile.");
+	            	return;
+	            case TileConstants.BED:
+	            	showText("This isn't my bed, yet I woke up in it...");
+	            	return;
+	            case TileConstants.WARDROBE:
+	            	showText("The wardrobe creaks as I touch it.");
+	            	return;
+	            case TileConstants.IRON_DOOR:
+	            	DoorInteraction(checkX, checkY);
+	            	return;
+	            default:
+	            	showText("Nothing interesting here.");
 	            }
 	        }
 	    }
-	    showText("Nothing interesting here.");
 	}
 	
+	private void DoorInteraction(int x, int y) {
+		if (hud.getInventory().getItems().contains(ironKey)){
+			showText("I can open this door!");
+			openDoor(x, y);
+		} else {
+			showText("The door's bolted with an iron latch.");
+		}
+		
+	}
+
+	private void openDoor(int x, int y) {
+		if (currentRoom.getTile(x, y) == TileConstants.IRON_DOOR) {
+			currentRoom.setTile(x, y, TileConstants.OPEN_IRON_DOOR);
+			hud.getInventory().removeItem(ironKey);
+		}
+		
+	}
+
 	private void pickup(Item pickedUp, int x, int y) {
-		System.out.println("Attempting to pick up " + pickedUp.getName());
 		if (hud.getInventory().isFull()){
 			showText("I can't pick it up, my pockets are full...");
 		} else {
-			System.out.println("Item picked up!");
 			hud.getInventory().addItem(pickedUp);
 			showText(pickedUp.getPickupMessage());
 			Point point = new Point(x,y);
 			currentRoom.removeItem(point);
-		}
-		
+		}	
 	}
 
 	// TEXT
@@ -240,7 +273,6 @@ public class GameWindow {
 			textRenderer.drawText(displayedText, textDisplayStart, textDisplayHeight, windowWidth);
 		}
 	}
-
 
 	private void renderTile(char tile, int x, int y) {
 		// x = width

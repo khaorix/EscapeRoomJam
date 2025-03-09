@@ -35,10 +35,8 @@ public class Room {
     }
     
     public Item getItemFromCoords(int x, int y) {
-    	System.out.println("Checking for items in " +x + "/" + y);
     	Point point = new Point(x, y);
     	if (items.containsKey(point)) {
-    		System.out.println("Item found!");
     		return items.get(point);
     	} else {
     		return null;
@@ -51,7 +49,7 @@ public class Room {
     }
     
     public void setTile(int x, int y, char newTile) {
-        layout[x][y] = newTile;
+        layout[y][x] = newTile;
     }
 
     public char getTile(int x, int y) {
