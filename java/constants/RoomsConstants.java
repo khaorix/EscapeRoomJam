@@ -3,21 +3,21 @@ package constants;
 public class RoomsConstants {
 	public static String[] TEST_ROOM = {
 		"#######",
-		"#0...Æ#",
+		"#0...W#",
 		"#.....#",
 		"#.....1",
 		"#.....#",
-		"#πo...#",
+		"#to...#",
 		"#######"
 	};
 	
 	public static String[] TEST_ROOM_2 = {
 		"#######",
-		"#0...Æ#",
+		"#0...W#",
 		"#.....#",
 		"#.....I",
 		"#.....#",
-		"#πo...#",
+		"#to...#",
 		"#######"
 	};
 	
@@ -26,8 +26,8 @@ public class RoomsConstants {
 		"#.....#",
 		"#.....#",
 		"2.....#",
-		"#Æ...o#",
-		"#πo..π#",
+		"#W...o#",
+		"#to..t#",
 		"###l###"
 	};
 	public static String[] IRON_ROOM_2 = {
@@ -35,12 +35,12 @@ public class RoomsConstants {
 		"#.....#",
 		"#.....#",
 		"2.....#",
-		"#Æ...o#",
-		"#πo..π#",
+		"#W...o#",
+		"#to..t#",
 		"###L###"
 	};
 	public static String[] FINAL_ROOM = {
-		"###£###",
+		"###M###",
 		"#.....#",
 		"#.....#",
 		"#.....#",
@@ -49,7 +49,7 @@ public class RoomsConstants {
 		"###g###"
 	};
 	public static String[] FINAL_ROOM_2 = {
-		"###£###",
+		"###M###",
 		"#.....#",
 		"#.....#",
 		"#.....#",

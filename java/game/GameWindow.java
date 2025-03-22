@@ -81,33 +81,33 @@ public class GameWindow {
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 
 		tileTextures = new HashMap<>();
-		tileTextures.put(TileConstants.WALL, TextureLoader.loadTexture("src/main/resources/textures/wall.png"));
-		tileTextures.put(TileConstants.FLOOR, TextureLoader.loadTexture("src/main/resources/textures/floor.png"));
-		tileTextures.put(TileConstants.TABLE, TextureLoader.loadTexture("src/main/resources/textures/table.png"));
-		tileTextures.put(TileConstants.BED, TextureLoader.loadTexture("src/main/resources/textures/bed.png"));
-		tileTextures.put(TileConstants.CHAIR, TextureLoader.loadTexture("src/main/resources/textures/chair.png"));
-		tileTextures.put(TileConstants.WARDROBE, TextureLoader.loadTexture("src/main/resources/textures/wardrobe.png"));
-		tileTextures.put(TileConstants.IRON_DOOR, TextureLoader.loadTexture("src/main/resources/textures/door.png"));
-		tileTextures.put(TileConstants.PLAYER, TextureLoader.loadTexture("src/main/resources/textures/player.png"));
+		tileTextures.put(TileConstants.WALL, TextureLoader.loadTexture("/textures/wall.png"));
+		tileTextures.put(TileConstants.FLOOR, TextureLoader.loadTexture("/textures/floor.png"));
+		tileTextures.put(TileConstants.TABLE, TextureLoader.loadTexture("/textures/table.png"));
+		tileTextures.put(TileConstants.BED, TextureLoader.loadTexture("/textures/bed.png"));
+		tileTextures.put(TileConstants.CHAIR, TextureLoader.loadTexture("/textures/chair.png"));
+		tileTextures.put(TileConstants.WARDROBE, TextureLoader.loadTexture("/textures/wardrobe.png"));
+		tileTextures.put(TileConstants.IRON_DOOR, TextureLoader.loadTexture("/textures/door.png"));
+		tileTextures.put(TileConstants.PLAYER, TextureLoader.loadTexture("/textures/player.png"));
 		tileTextures.put(TileConstants.OPEN_IRON_DOOR,
-				TextureLoader.loadTexture("src/main/resources/textures/openDoor.png"));
+				TextureLoader.loadTexture("/textures/openDoor.png"));
 		tileTextures.put(TileConstants.OPEN_IRON_DOOR_2,
-				TextureLoader.loadTexture("src/main/resources/textures/openDoor.png"));
+				TextureLoader.loadTexture("/textures/openDoor.png"));
 		tileTextures.put(TileConstants.LEVER_OFF,
-				TextureLoader.loadTexture("src/main/resources/textures/leverOff.png"));
-		tileTextures.put(TileConstants.LEVER_ON, TextureLoader.loadTexture("src/main/resources/textures/leverOn.png"));
+				TextureLoader.loadTexture("/textures/leverOff.png"));
+		tileTextures.put(TileConstants.LEVER_ON, TextureLoader.loadTexture("/textures/leverOn.png"));
 		tileTextures.put(TileConstants.LEVER_DOOR,
-				TextureLoader.loadTexture("src/main/resources/textures/leverDoor.png"));
+				TextureLoader.loadTexture("/textures/leverDoor.png"));
 		tileTextures.put(TileConstants.OPEN_LEVER_DOOR,
-				TextureLoader.loadTexture("src/main/resources/textures/openDoor.png"));
+				TextureLoader.loadTexture("/textures/openDoor.png"));
 		tileTextures.put(TileConstants.OPEN_LEVER_DOOR_2,
-				TextureLoader.loadTexture("src/main/resources/textures/openDoor.png"));
+				TextureLoader.loadTexture("/textures/openDoor.png"));
 		tileTextures.put(TileConstants.GOLD_DOOR,
-				TextureLoader.loadTexture("src/main/resources/textures/goldDoor.png"));
+				TextureLoader.loadTexture("/textures/goldDoor.png"));
 		tileTextures.put(TileConstants.OPEN_GOLD_DOOR,
-				TextureLoader.loadTexture("src/main/resources/textures/openDoor.png"));
+				TextureLoader.loadTexture("/textures/openDoor.png"));
 
-		textRenderer = new TextRenderer("src/main/resources/font/fontgrid white.png", 512, 160);
+		textRenderer = new TextRenderer("/font/fontgrid white.png", 512, 160);
 
 		currentRoom = new Room(RoomsConstants.TEST_ROOM);
 		ironKey = ItemConstants.IRON_KEY;

@@ -9,7 +9,7 @@ public class HUD {
 
 	public HUD(Inventory inventory) {
 		this.inventory = inventory;
-		this.textRenderer = new TextRenderer("src/main/resources/font/fontgrid white.png", 512, 160);
+		this.textRenderer = new TextRenderer("/font/fontgrid white.png", 512, 160);
 	}
 
 	public void render(float screenWidth, float screenHeight) {
@@ -17,7 +17,7 @@ public class HUD {
 		float invY = 50; // Offset from top
 
 		// Draw "Inventory" label
-		textRenderer.drawText("Items", invX - 50, invY - 40, 100);
+		//textRenderer.drawText("Items", invX - 50, invY - 40, 100);
 
 		int slotSize = 36; // Adjust for padding
 		int index = 0;
