@@ -45,12 +45,13 @@ public class GameWindow {
 	private boolean ironRoomSolved = false;
 	private boolean goldKeyFound = false;
 	private boolean finalRoomSolved = false;
-	
+
 	private enum GameState {
-			PLAYING, ENDING
+		PLAYING, ENDING
 	};
+
 	private GameState gameState = GameState.PLAYING;
-	
+
 	// TECHNICAL
 	public void run() {
 		init();
@@ -101,8 +102,10 @@ public class GameWindow {
 				TextureLoader.loadTexture("src/main/resources/textures/openDoor.png"));
 		tileTextures.put(TileConstants.OPEN_LEVER_DOOR_2,
 				TextureLoader.loadTexture("src/main/resources/textures/openDoor.png"));
-		tileTextures.put(TileConstants.GOLD_DOOR, TextureLoader.loadTexture("src/main/resources/textures/goldDoor.png"));
-		tileTextures.put(TileConstants.OPEN_GOLD_DOOR, TextureLoader.loadTexture("src/main/resources/textures/openDoor.png"));
+		tileTextures.put(TileConstants.GOLD_DOOR,
+				TextureLoader.loadTexture("src/main/resources/textures/goldDoor.png"));
+		tileTextures.put(TileConstants.OPEN_GOLD_DOOR,
+				TextureLoader.loadTexture("src/main/resources/textures/openDoor.png"));
 
 		textRenderer = new TextRenderer("src/main/resources/font/fontgrid white.png", 512, 160);
 
@@ -158,12 +161,12 @@ public class GameWindow {
 			hideText();
 		}
 		if (gameState == GameState.ENDING) {
-	        if (GLFW.glfwGetKey(window, GLFW.GLFW_KEY_SPACE) == GLFW.GLFW_PRESS) {
-	            GLFW.glfwSetWindowShouldClose(window, true); // Close the game
-	        }
-	        return; // Prevent normal game input
-	    }
-		
+			if (GLFW.glfwGetKey(window, GLFW.GLFW_KEY_SPACE) == GLFW.GLFW_PRESS) {
+				GLFW.glfwSetWindowShouldClose(window, true); // Close the game
+			}
+			return; // Prevent normal game input
+		}
+
 	}
 
 	// PLAYER MOVEMENT
@@ -171,7 +174,7 @@ public class GameWindow {
 		if (gameState == GameState.ENDING) {
 			return;
 		}
-		
+
 		int newX = playerX + dx;
 		int newY = playerY + dy;
 
@@ -220,11 +223,11 @@ public class GameWindow {
 			if (currentRoom.getTile(5, 1) == TileConstants.WARDROBE) {
 				currentRoom = new Room(RoomsConstants.IRON_ROOM_2);
 				playerX = 1;
-				playerY = 3;	
+				playerY = 3;
 			} else {
 				currentRoom = new Room(RoomsConstants.IRON_ROOM_2);
 				playerX = 3;
-				playerY = 5;				
+				playerY = 5;
 			}
 		} else {
 			currentRoom = new Room(RoomsConstants.IRON_ROOM);
@@ -240,14 +243,14 @@ public class GameWindow {
 		if (!finalRoomSolved) {
 			currentRoom = new Room(RoomsConstants.FINAL_ROOM);
 			playerX = 3;
-			playerY = 1;			
+			playerY = 1;
 		} else {
 			currentRoom = new Room(RoomsConstants.FINAL_ROOM_2);
 			playerX = 3;
-			playerY = 1;	
+			playerY = 1;
 		}
 	}
-	
+
 	private void win() {
 		gameState = GameState.ENDING;
 	}
@@ -326,13 +329,13 @@ public class GameWindow {
 	private void goldDoorInteraction(int x, int y) {
 		if (hud.getInventory().getItems().contains(goldKey)) {
 			showText("I can open this door!");
-			
+
 			openDoor(x, y);
 		} else {
 			showText("This golden lock is the last obstacle to freedom!");
 		}
 	}
-	
+
 	private void openDoor(int x, int y) {
 		char tile = currentRoom.getTile(x, y);
 		if (tile == TileConstants.IRON_DOOR) {
@@ -348,7 +351,7 @@ public class GameWindow {
 					finalRoomSolved = true;
 				}
 			}
-		} 
+		}
 	}
 
 	private void pickup(Item pickedUp, int x, int y) {
@@ -393,7 +396,8 @@ public class GameWindow {
 
 	private void renderRoom() {
 		if (gameState == GameState.ENDING) {
-			textRenderer.drawText("I can see the blue sky and the green meadows.I am free...", windowWidth / 2 - 100, windowHeight / 2, windowWidth);
+			textRenderer.drawText("I can see the blue sky and the green meadows.I am free...", windowWidth / 2 - 100,
+					windowHeight / 2, windowWidth);
 			return;
 		}
 		// x = width
@@ -415,7 +419,7 @@ public class GameWindow {
 		if (textVisible) {
 			textRenderer.drawText(displayedText, textDisplayStart, textDisplayHeight, windowWidth);
 		}
-		
+
 	}
 
 	private void renderTile(char tile, int x, int y) {
